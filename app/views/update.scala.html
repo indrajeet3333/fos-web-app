@@ -1,0 +1,29 @@
+@(userName: String,userZip: String,userEmail: String,updated: String)
+
+@main("Welcome to Eats & Treats") {
+    <div class="container"><br>
+        @if(updated == "yes"){
+            <h2>User details Updated!</h2>
+        }else{
+            <h3>You can update your details below:</h3>
+            <div class="card shadow" style="padding: 1.5em;border-radius: 1em;">
+                <h2 style="font-size: 1.6em">Update Details</h2>
+                <form action="/updatedetails" method="post">
+                    <div class="form-group">
+                        <label for="uname1">Name</label>
+                        <input style="width: 300px" class="form-control" name = "uname" type="text" value="@userName" id="uname1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uzip1">Zip Code</label>
+                        <input style="width: 300px" class="form-control" name = "uzip" type="text" value="@userZip" id="uzip1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uemail2">Email address</label>
+                        <input style="width: 300px" class="form-control" name = "uemail" type="email" value="@userEmail" id="uemail2" required>
+                    </div>
+                    <input style="font-size: 1.2em;border-radius: 1.5rem;" type="submit" value="Update" class="btn btn-outline-primary shadow">
+                </form>
+            </div>
+        }
+    </div>
+}

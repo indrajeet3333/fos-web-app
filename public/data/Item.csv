@@ -1,0 +1,101 @@
+ItemId,VendorId,ItemName,Price
+1,1,Chick-fil-A Chicken Sandwich,3.05
+2,1,Spicy Chicken Sandwich,3.65
+3,1,Chick-fil-A Nuggets,3.5
+4,1,Chick-n-Strips,3.35
+5,1,Grilled Chicken Sandwich,4.39
+6,1,Chicken Salad Sandwich,3.99
+7,1,Icedream Cone,1.65
+8,1,Chicken Soup,4.35
+9,1,Chick-fil-A Chicken Deluxe Sandwich,3.65
+10,1,Spicy Chicken Deluxe Sandwich,3.89
+11,2,Rolled Chicken Tacos 4-Pack,4.59
+12,2,Double Chalupa,3.89
+13,2,Soft Taco,1.59
+14,2,Grilled Steak Soft Taco,2.99
+15,2,Taco and Burrito Party Pack,16.49
+16,2,3 Crunchy Tacos Combo,6.69
+17,2,Double Chalupa Box,5.99
+18,2,Rolled Chicken Tacos Party Pack,12.99
+19,2,Cheesy Fiesta Potatoes,1.99
+20,2,Cheesy Roll Up,1
+21,3,Ultimate Steak,4.99
+22,3,Black Forest Ham,5.5
+23,3,Chicken & Bacon Ranch Melt,7.75
+24,3,Cold Cut Combo,5.5
+25,3,Pizza Sub with Cheese,5.5
+26,3,Turkey Breast,6.75
+27,3,Turkey & Bacon Guacamole,8.75
+28,3,Sweet Onion Chicken Teriyaki,4.75
+29,3,Turkey Breast & Black Forest Ham,4.25
+30,3,Buffalo Chicken,6
+31,4,Buttermilk Crispy Chicken,4.39
+32,4,Artisan Grilled Chicken – Meal,6.39
+33,4,Premium McWrap Chicken & Ranch (Grilled or Crispy) – Meal,6.39
+34,4,Filet-O-Fish – Meal,5.79
+35,4,Premium Chicken Bacon Clubhouse (Grilled or Crispy),4.49
+36,4,Chicken McNuggets,5
+37,4,Southwest Salad,4.79
+38,4,French Fries,1.39
+39,4,McDouble,1.39
+40,4,Cinnamon Melt,1.69
+41,5,Caffe Latte - Tall,2.95
+42,5,White Chocolate Mocha,3.75
+43,5,Cinnamon Dolce Latte,4.65
+44,5,Caramel Flan Latte,4.55
+45,5,Flat White,3.75
+46,5,Butter Croissant,2.45
+47,5,Morning Bun,2.45
+48,5,Omega-3 Bistro Box,5.95
+49,5,Chicken Santa Fe Flatbread,5.95
+50,5,Coffee Frappuccino,4.45
+51,6,Bonafide® Chicken – Dinner,5.29
+52,6,Wings – Dinner,6.49
+53,6,Bonafide® Chicken Mixed or Tenders (Limited Time),10.99
+54,6,Tenders – Combo,7.29
+55,6,Chicken Po’ Boy – Dinner,4.99
+56,6,Cajun Fish,7.49
+57,6,Fish & Popcorn Shrimp,7.99
+58,6,Seafood Po’ Boy (Fish or Shrimp),6.99
+59,6,Spicy Garlic Butterfly Shrimp – Dinner (Limited Time),4.99
+60,6,Chicken Meal (2 Large Sides and 6 Biscuits),27.99
+61,7,John’s Favorite (Original),16
+62,7,Pepperoni (Original),13
+63,7,Sausage (Original)`,13
+64,7,The Works (Original)1,16
+65,7,The Meats (Original),20
+66,7,Bacon Cheeseburger (Thin),18
+67,7,Chicken Parmesan (original),18
+68,7,Spicy Italian (Original),18
+69,7,BBQ Chicken Bacon (Thin),20
+70,7,Tuscan Six Cheese (Thin),18
+71,8,"ExtravaganZZa - X-Large 16""",19.99
+72,8,"MeatZZa - Large 14""",16.99
+73,8,"Philly Cheese Steak - Large 14""",16.99
+74,8,"Pacific Veggie - Small 10""",9.5
+75,8,"Honolulu Hawaiian - X-Large 16""",18.99
+76,8,"Deluxe - Small 10""",9.5
+77,8,"Cali Chicken Bacon Ranch - X-Large 16""",18.99
+78,8,"Buffalo Chicken - Small 10""",9.5
+79,8,Buffalo Chicken,6.49
+80,8,Chicken Alfredo,6.99
+81,9,Any New York Slice,6.79
+82,9,Stuffed Slice,7.99
+83,9,Stromboli,7.99
+84,9,Meatballs,8.99
+85,9,Chicken With Pasta,8.99
+86,9,New York Pepperoni Slice,3.79
+87,9,Baked Ziti pasta,5.99
+88,9,Meatballs & spaghetti Pasta,6.99
+89,9,Spaghetti pasta With Sauce,4.79
+90,9,New York Cheese Slice,3.29
+91,10,Veggie Spring Rolls,1.9
+92,10,Chicken Egg Roll,1.9
+93,10,Crispy Shrimp,9.7
+94,10,Fountain Drink,2
+95,10,Mushroom Chicken,3
+96,10,Orange Chicken,4
+97,10,White Steamed Rice,2
+98,10,Kung Pao Chicken,5
+99,10,Grilled Teriyaki Chicken,6.4
+100,10,String Bean Chicken Breast	,7.2

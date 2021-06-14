@@ -1,0 +1,79 @@
+@(LoginStatus: String)
+
+  @main("Welcome to Eats & Treats") {
+    <div class="container"><br>
+        <h1 class="text-center"></h1>
+        <div class="row">
+            <div class="col-8" id="bgImg"></div>
+            <div class="col-4">
+                <div class="card shadow" style="margin-bottom: 1.8em;padding: 1.5em;border-radius: 1em;">
+                    <h2 class="card-title" style="font-size: 1.6em">Login</h2>
+                    @if(LoginStatus == "inv-email") {
+                        <div class="alert alert-danger" role="alert">
+                            No user found for the given email address
+                        </div>
+                    }
+                    @if(LoginStatus == "inv-pass") {
+                        <div class="alert alert-danger" role="alert">
+                            Please enter the valid password
+                        </div>
+                    }
+                    <form action="/login" method="POST">
+                        <div class="form-group">
+                            <label for="uemail1">Email address</label>
+                            <input style="width: 300px" class="form-control" name = "uemail" type="email" placeholder="you@("@")example.com"id="uemail1" required autofocus checked>
+                        </div>
+                        <div class="form-group">
+                            <label for="upass1">Password</label>
+                            <input style="width: 300px" class="form-control" name = "upwd" type="password" placeholder="T0pS3C&#174;3T" id="upass1" required>
+                            <input type="checkbox" onclick="Toggle1()" style="margin-top: 1em;width:16px;height:16px;background:white;border-radius:5px;">&nbsp;<span style="font-size: 1.1em;">Show Password</span>
+                        </div>
+                        <input class="btn btn-outline-primary shadow" type="submit" value="Login" style="border-radius: 1.5rem;">
+                        @*  <a href="/login"><button style="font-size: 1.2em">Login</button></a>*@
+                    </form>
+                </div>
+                <div class="card shadow" style="padding: 1.5em;border-radius: 1em;">
+                    <h2 style="font-size: 1.6em">Sign up now!</h2>
+                    <form action="/signup" method="post">
+                        <div class="form-group">
+                            <label for="uname1">Name</label>
+                            <input style="width: 300px" class="form-control" name = "uname" type="text" placeholder="E.g John Doe"id="uname1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="uzip1">Zip Code</label>
+                            <input style="width: 300px" class="form-control" name = "uzip" type="text" placeholder="E.g 94102"id="uzip1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="uemail2">Email address</label>
+                            <input style="width: 300px" class="form-control" name = "uemail" type="email" placeholder="you@("@")example.com"id="uemail2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="upass2">Password</label>
+                            <input style="width: 300px" class="form-control" name = "upwd" type="password" placeholder="T0pS3C&#174;3T" id="upass2" required>
+                            <input type="checkbox" onclick="Toggle2()" style="margin-top: 1em;width:16px;height:16px;background:white;border-radius:5px;">&nbsp;<span style="font-size: 1.1em;">Show Password</span>
+                        </div>
+                        <input style="font-size: 1.2em;border-radius: 1.5rem;" type="submit" value="Sign Up" class="btn btn-outline-primary shadow">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="application/javascript">
+        function Toggle1() {
+            var x = document.getElementById("upass1");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+        function Toggle2() {
+            var x = document.getElementById("upass2");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+  }

@@ -1,0 +1,196 @@
+@(uid: Integer,bid: Integer,tax: Double,vendorName: String,vendorAddress: String, Items: List[String], Prices: List[Double], iids: List[Integer], itemsAvail: String)
+
+@main("Eats & Treats") {
+    <div class="container" style="padding: 2em">
+    @if(itemsAvail == "no"){
+        <h1>Sorry! The vendor has not yet put up any items for sale.</h1>
+        <h4>I heard that the vendor is hungry for profits though.<br> Don't Worry, we will notify you as soon as the vendor puts items for sale!</h4>
+    }else{
+        <div id="hidden" style="display: none">
+            <h1 id="uid">@uid</h1>
+            <h1 id="bid">@bid</h1>
+            <h1 id="vendorName">@vendorName</h1>
+            <h1 id="vendorAddress">@vendorAddress</h1>
+            <h1 id="taxV">@tax</h1>
+            <form action="/order" method="POST" id="submitForm">
+                <input name="uid" id="uid1" placeholder="User id"><br>
+                <input name="bid" id="bid1" placeholder="Branch id"><br>
+                <input name="dt"  id="dt1" placeholder="Date"><br>
+                <input name="subtotal" id="stotal" placeholder="Sub Total"><br>
+                <input name="tax"  id="tax1" placeholder="Tax"><br>
+                <input name="price" id="oprice" placeholder="Final Price of the order"><br>
+            </form>
+        </div>
+        <h2>@vendorName</h2>
+        <p>@vendorAddress</p>
+        <h4>Menu</h4>
+        <div class="row">
+            <div class="col-6">
+                <div class="row">
+                @for((item,index) <- Items.zipWithIndex){
+                    <div class="animated col-6 fadeIn slow" style="padding-bottom: 1.5em;height: 100%">
+                        <div class="card shadow" style="border-radius: 1.5rem;">
+                            <div class="card-body">
+                                <h5 class="card-title" id="item@iids(index)" style="font-size: 1em">@item</h5>
+                                <p class="card-text" style="font-size: 1em">$<span id="price@iids(index)">@Prices(index)</span></p>
+                                <div style="width: 100%">Quantity&nbsp;&nbsp;&nbsp;
+                                    <button id="p@iids(index)" onclick="addQty(this.id)" style="text-align: center;width: 35px;height: 35px;" class="btn btn-outline-info" >+</button>
+                                    <button id="quantity@iids(index)" style="text-align: center;width: 45px;height: 35px;" class="btn btn-outline-info" >0</button>
+                                    @*                            <input type="text" style="vertical-align: -3px;text-align: center;width: 35px;height: 35px;font-size: 1.1em;" class="text-center btn-outline-info" value="0">*@
+                                    <button id="m@iids(index)" onclick="subQty(this.id)" style="text-align: center;width: 35px;height: 35px;" class="btn btn-outline-info">-</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+            </div>
+            <div class="col-6">
+                <h4>Kart</h4>
+                <div class="row">
+                    <div class="col-8"><h6>Item</h6></div>
+                    <div class="col-2" style="padding: 0px;text-align: center"><h6>Quantity</h6></div>
+                    <div class="col-2" style="padding: 0px;text-align: center"><h6>Price</h6></div>
+                </div>
+                <div class="row">
+                    <div class="col-8" style=""><ol id="kart"></ol></div>
+                    <div class="col-2" style="padding: 0px"><ul id="kartQty" style="list-style-type: none;padding: 0px;text-align: center"></ul></div>
+                    <div class="col-2" style="padding: 0px"><ul id="kartPrice" style="list-style-type: none;padding: 0px;text-align: center"></ul></div>
+                </div>
+                <div class="row" id="subTotal"></div>
+                <div class="row" id="tax"></div>
+                <div class="row" id="total"></div>
+                <div class="row" style="display: none;" id="berr"><div class="alert alert-danger" role="alert" id="berrmsg"></div></div>
+                <div class="row" id="order">
+                    <div class="col" onclick="placeOrder()" style="padding: 10px;"><button class="btn btn-outline-success" style="text-align: center;width: 100%;border-radius: 2em">Place Order</button></div>
+                </div>
+            </div>
+        </div>
+    }
+        <script type="application/javascript">
+                var kartList = document.getElementById("kart");
+                function computeTotal() {
+                    var priceList = $("#kartPrice").children();
+                    if(priceList.length === 0){
+                        $('#grandt').text(" ");
+                        $('#subTotal').empty();
+                        $('#tax').empty();
+                        $('#total').empty();
+                        return;
+                    }
+                    var sum = 0;
+                    for (var i = 0; i < priceList.length;i++){
+                        var t = priceList.get(i);
+                        sum += Number(t.innerText);
+                    }
+                    var sTotal = sum.toFixed(2);
+                    var cTax = (sTotal*Number($('#taxV').text())/100).toFixed(2);
+                    var gTotal =Number(sTotal) + Number(cTax);
+                    $('#subt').text("$"+sTotal);
+                    $('#ttax').text("$"+cTax);
+                    $('#grandt').text("$"+gTotal.toFixed(2));
+                }
+                function placeOrder() {
+                    var grandTotal = $('#grandt').text();
+                    if(grandTotal === ""){
+                        $('#berr').css('display','block');
+                        $('#berrmsg').text("Please add items to place an order.")
+                        return;
+                    }else{
+                        var itemList = $("#kart").children();
+                        for (var i = 0; i < itemList.length;i++){
+                            var t = itemList.get(i);
+                            console.log(t.innerText);
+                            console.log('<input name="itemName" value="'+t.innerText+'">');
+                            $('#submitForm').append('<input name="itemName" value="'+t.innerText+'"><br>');
+                        }
+                        var itemQuantity = $("#kartQty").children();
+                        for (var i = 0; i < itemQuantity.length;i++){
+                            var t = itemQuantity.get(i);
+                            console.log(t.innerText);
+                            console.log('<input name="iqty" value="'+t.innerText+'">');
+                            $('#submitForm').append('<input name="iqty" value="'+t.innerText+'"><br>');
+                        }
+                        var itemPrice = $("#kartPrice").children();
+                        for (var i = 0; i < itemPrice.length;i++){
+                            var t = itemPrice.get(i);
+                            console.log(t.innerText);
+                            console.log('<input name="iprc" value="'+t.innerText+'">');
+                            $('#submitForm').append('<input name="iprc" value="'+t.innerText+'"><br>');
+                        }
+                        $('#uid1').val($('#uid').text());            //Send UserID of the order
+                        $('#bid1').val($('#bid').text());            //Send BranchID of the order
+                        $('#stotal').val($('#subt').text());         //Send Sub Total of the order
+                        $('#tax1').val($('#ttax').text());            //Send Computed Tax of the order
+                        $('#oprice').val($('#grandt').text());       //Send Order Price of the order
+                        //Get Today's Date in 'YYYY-MM-DD' Format
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+                        today = yyyy + '-' + mm + '-' + dd;
+                        $('#dt1').val(today);
+                        $('#submitForm').submit();
+                    }
+                }
+                function addQty(id) {
+                    $('#tax').css('display','block');
+                    $('#total').css('display','block');
+                    $('#berr').css('display','none');
+                    var id = id.slice(1);
+                    var btnid = "quantity"+id;
+                    var itemId = "item"+id;
+                    var priceId = "price"+id;
+                    var x = document.getElementById(btnid);
+                    var qty = Number(x.innerText);
+                    qty += 1;
+                    x.innerText = qty;
+                    if (qty > 0){
+                        if ($('#kart'+id).text() === ""){
+                            $("#kart").append('<li style="padding-bottom: 0.2em;" id=\'kart'+id+'\'>'+$('#item'+id).text()+'</li>');
+                            $("#kartQty").append('<li style="padding-bottom: 0.2em;" id=\'kquantity'+id+'\'>'+x.innerText+'</li>');
+                            $("#kartPrice").append('<li class = "priceClass" style="padding-bottom: 0.2em;" id=\'kprice'+id+'\'>'+$('#price'+id).text()+'</li>');
+                            if ($('#added').text() === "") {
+                                $("#subTotal").append('<h5 style="text-align: right;width: 100%">Subtotal: <span id="subt"></span></h5>');
+                                $("#tax").append('<h5 style="text-align: right;width: 100%" id="added">Tax: <span id="ttax"></span></h5>');
+                                $("#total").append('<h5 style="text-align: right;width: 100%">Order Total: <span id="grandt"></span></h5>');
+                                computeTotal();
+                            }
+                            computeTotal();
+                        }else{
+                            $('#kquantity'+id).text(qty);
+                            var unitprice = $('#price'+id).text();
+                            var upNumeric = Number(unitprice);
+                            var total = qty * upNumeric;
+                            $('#kprice'+id).text(total.toFixed(2));
+                            computeTotal();
+                        }
+                    }
+                }
+                function subQty(id) {
+                    $('#berr').css('display','none');
+                    var id = id.slice(1);
+                    var btnid = "quantity"+id;
+                    var x = document.getElementById(btnid);
+                    var qty = Number(x.innerText);
+                    qty -= 1;
+                    if (qty > 0){
+                        x.innerText = qty;
+                        $('#kquantity'+id).text(qty);
+                        var unitprice = $('#price'+id).text();
+                        var upNumeric = Number(unitprice);
+                        var total = qty * upNumeric;
+                        $('#kprice'+id).text(total.toFixed(2));
+                        computeTotal();
+                    }else{
+                        qty=0;
+                        x.innerText = qty;
+                        $('#kquantity'+id).remove();
+                        $('#kprice'+id).remove();
+                        $('#kart'+id).remove();
+                        computeTotal();
+                    }
+                }
+        </script>
+    </div>
+}

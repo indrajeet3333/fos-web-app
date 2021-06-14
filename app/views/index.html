@@ -1,0 +1,91 @@
+{% extends 'patiladmin/baselayout.html' %}
+{% load static %}
+{% block content%}
+<div class="container">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" type="text/css">
+	<div class="row">
+		<div class="col-md-12 order-md-1">
+			<div class="text-center" style="padding-top: 2rem;color: rgb(210,0,120)">
+				<h1>Client Registration</h1>
+			</div>
+			<h3 class="mb-3">Client Details</h4>
+				<form class="needs-validation animated fadeIn" method="POST" action="/submit">
+					{% csrf_token %}
+					<div class="mb-3">
+						<h5 for="firstName">First name</h5>
+						<input type="text" class="form-control" name="firstName" placeholder="" value="" required>
+					</div>
+
+					<div class="mb-3">
+						<h5 for="lastName">Last name</h5>
+						<input type="text" class="form-control" name="lastName" placeholder="" value="" required>
+					</div>
+
+					<div class="mb-3">
+						<h5 for="phone">Contact</h5>
+						<input type="number" class="form-control" name="contact">
+					</div>
+
+					<div class="mb-3">
+						<h5 for="email">Email</h5>
+						<input type="email" class="form-control" name="email" placeholder="you@example.com">
+					</div>
+
+					<div class="mb-3">
+						<h5 for="address">Address</h5>
+						<input type="text" class="form-control" name="address" placeholder="E.g. 1034 Model Colony" required>
+					</div>
+
+					<div class="row">
+						<div class="col-md-5 mb-3">
+							<h5 for="city">City</h5>
+							<input type="text" name="city" class="form-control" placeholder="E.g. Pune">
+						</div>
+						<div class="col-md-4 mb-3">
+							<h5 for="state">State</h5>
+							<input type="text" name="state" class="form-control" placeholder="E.g. Maharashtra">
+						</div>
+						<div class="col-md-3 mb-3">
+							<h5 for="zip">Pin Code</h5>
+							<input type="number" class="form-control" name="zip" placeholder="E.g. 411016" required>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<h5>Purpose of Visit</h5>
+						<input type="text" class="form-control" name="pVisit" placeholder="" value="" required>
+					</div>
+
+					<div class="mb-3">
+						<h5>To meet with</h5>
+						<select class="form-control" name="toMeet" required>
+							<option value="">Choose...</option>
+							<option>Adv. Prashant Patil</option>
+							<option>Adv. Pranav Patil</option>
+							<option>Adv. Abid Mulani</option>
+							<option>Adv. Seoul Shah</option>
+							<option>Steno Ramesh Taur</option>
+							<option>clerk</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<h5>How did you hear about us</h5>
+						<input type="text" class="form-control" name="hAbout" placeholder="Friend, Internet, Newspaper etc" value=""
+						 required>
+					</div>
+
+					<div class="mb-3">
+						<h5>Case Synosis (Optional)</h5>
+						<textarea type="text" class="form-control" rows=5 name="cSynop" placeholder="Please describe your case details in brief"
+						 value=""></textarea>
+					</div>
+
+					<h5 class="mb-2" style="color: rgba(0,0,80,0.8);font-size: 1rem;">*Disclaimer: Charges will be
+						applicable per conference</h5>
+					<button class="shadow btn btn-lg btn-block" id="formSubmit" type="submit" style="margin-top: 2%;color:#FFFFFF;background-color: rgba(0, 0, 90, 0.6)">Save</button>
+				</form>
+		</div>
+	</div>
+</div>
+{% endblock %}

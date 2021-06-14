@@ -1,0 +1,9 @@
+@(branches: List[String], bids: List[Integer])
+
+@main("Eats & Treats") {
+    <ul>
+    @for((address,index) <- branches.zipWithIndex){
+        <li>@address -------- @bids(index)</li>
+    }
+    </ul>
+}

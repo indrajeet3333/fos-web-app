@@ -106,7 +106,9 @@ public class HomeController extends Controller {
         List<String> vendors = new ArrayList<>();
         connectToMySQL();
         try {
-            pst = conn.prepareStatement("SELECT v.vname,b.address,b.branchid FROM vendor v, branch b WHERE v.vendorid=b.vendorid AND b.zcode = ?");
+            pst = conn.prepareStatement("SELECT v.vname,b.address,b.branchid FROM vendor v, branch b WHERE v.vendorid=b.vendorid AND b.zcode = ?",
+            ResultSet.TYPE_SCROLL_SENSITIVE, 
+            ResultSet.CONCUR_UPDATABLE);
             pst.setInt(1, uzip);
             pst.executeQuery();
             resultSet = pst.executeQuery();

@@ -1,0 +1,75 @@
+@(orderId: String,customerName: String,vendorName: String,vendorAddress: String,itemNames: List[String],itemQty: List[Integer],itemPrice: List[Double],orderSubT: String,orderTax: String,orderPrice: String)
+
+@main("Eats & Treats") {
+    <div class="container" style="padding: 2em">
+        <h2>Thank you for ordering with us!</h2>
+        <h3>You can pick up your order in an hour</h3>
+        <h3>Order Summary</h3>
+        <h4>Order Number: @orderId</h4>
+        <h4>Customer Name: @customerName</h4>
+        <h4>Restaurant: @vendorName</h4>
+        <p>@vendorAddress</p>
+        <div class="animated fadeIn" style="padding-bottom: 1.5em;height: 100%;width: 100%">
+            <div class="card shadow" style="border-radius: 1rem;">
+                <div class="card-body">
+                    <h5 class="card-title" id="">Picked Items</h5>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for((item,index)<-itemNames.zipWithIndex){
+                                <tr>
+                                    <td>@{index+1}. &nbsp;&nbsp;@item</td>
+                                    <td>@itemQty(index)</td>
+                                    <td>$@itemPrice(index)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+@*                    <div class="row">
+                        <div class="col-4">
+                           <h6>Item Name</h6>
+                        </div>
+                        <div class="col-4">
+                            <h6 class="text-center">Quantity</h6>
+                        </div>
+                        <div class="col-4">
+                            <h6 class="text-center">Price</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <ol>
+                            @for((item,index)<-itemNames.zipWithIndex){
+                                <li>@item</li>
+                            }
+                            </ol>
+                        </div>
+                        <div class="col-4">
+                            <ul class="text-center" style="list-style-type: none;padding-inline-start: 0px;">
+                            @for((item,index)<-itemQty.zipWithIndex){
+                                <li>@item</li>
+                            }
+                            </ul>
+                        </div>
+                        <div class="col-4">
+                            <ul class="text-center" style="list-style-type: none;padding-inline-start: 0px;">
+                            @for((item,index)<-itemPrice.zipWithIndex){
+                                <li>$@item</li>
+                            }
+                            </ul>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+        <h5>Sub Total: @orderSubT</h5>
+        <h5>Tax: @orderTax</h5>
+        <h5>Order Total: @orderPrice</h5>
+    </div>
+}

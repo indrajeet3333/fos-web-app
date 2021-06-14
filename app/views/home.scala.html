@@ -1,0 +1,45 @@
+@(userId: String,username: String, vendors: List[String], branches: List[String], bids: List[Integer], resAvailable: String)
+
+@main("Eats & Treats") {
+    <div class="container" style="padding: 2em">
+        @if(resAvailable == "no"){
+            <h1>Sorry! No restaurants available in your area</h1>
+            <h4>We are expanding faster than the universe!<br> Don't Worry, we will notify you as soon as we open a new branch near you!</h4>
+            <form action="/update" method="post" style="margin-bottom: 2em;">
+                <div style="display: none">
+                    <input type="text" name="userid" value="@userId">
+                </div>
+                <input class="btn btn-outline-primary shadow" type="submit" value="Update Details" style="border-radius: 1.5rem;">
+            </form>
+        }else{
+        <h2>Hello @username, How are you doing today?</h2><br>
+            <form action="/update" method="post" style="margin-bottom: 2em;">
+                <div style="display: none">
+                    <input type="text" name="userid" value="@userId">
+                </div>
+                <input class="btn btn-outline-primary shadow" type="submit" value="Update Details" style="border-radius: 1.5rem;">
+            </form>
+        <h3>Grab a bite!</h3>
+@*            <ul>
+                @for((address,index) <- branches.zipWithIndex){
+                    <li>@address -------- @bids(index)</li>
+                }
+            </ul>*@
+        <div class="row">
+            @for((vendor,index) <- vendors.zipWithIndex) {
+              <div class="animated col-3 fadeIn slow" style="padding-bottom: 1.5em;height: 100%">
+                <div class="card shadow">
+                <img class="card-img-top" src="assets/images/@{vendor+".png"}" alt="Card image cap">
+@*                <img class="card-img-top" src="assets/images/Chick-Fil-A.png" alt="Card image cap">*@
+                <div class="card-body">
+                    <h5 class="card-title">@vendor</h5>
+                    <p class="card-text" style="font-size: 1em">@branches(index)</p>
+                    <a href="menu/@bids(index)/" class="btn btn-primary">Order Now</a>
+                </div>
+                </div>
+              </div>
+        }
+        </div>
+    </div>
+}
+}

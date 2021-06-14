@@ -1,0 +1,140 @@
+{% extends 'patiladmin/baselayout.html' %}
+{% load static %}
+{% block content%}
+<div class="container">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" type="text/css">
+	<div class="text-center" style="padding-top: 2rem;color: rgb(210,0,120)">
+		<h1>Appointment History</h1>
+	</div>
+	{% for appointment in appointments %}
+	<div style="background-color: rgb(256, 256, 256);color: rgba(0,0,120,0.9);margin: 2rem 0.2rem;border-radius: 1.2rem;"
+	 class="card animated fadeIn">
+		<h3 class="card-header">Client: {{appointment.person}}</h5>
+			<div class="card-body">
+				<div class="side-head list-inline">
+					<h5 class="card-title list-inline-item">Appointment Date: {{appointment.dtOfApmt}}&nbsp;&nbsp;|</h5>
+					<h5 class="card-title list-inline-item">Appointment Time: {{appointment.tmOfApmt}}</h5>
+				</div>
+				<div class="side-p list-inline">
+					<p class="card-text list-inline-item">Appointment ID: <span id="appID{{ forloop.counter }}">{{appointment.id}}</span>&nbsp;&nbsp;|</p>
+					<p class="card-text list-inline-item">Appointment Scheduled on : {{appointment.schOn}}</p>
+				</div>
+				<button type="button" id="{{ forloop.counter }}" class="btn btn-outline-danger shadow" style="border-radius: 1.5rem;">Remove</button>
+			</div>
+	</div>
+	{% endfor %}
+
+	<!--Confirmation Modal -->
+	<div class="modal fade bd-example-modal-lg" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+	 aria-hidden="true">
+		<div class="modal-dialog modal-lg" style="background-color: rgb(256, 256, 256);color: rgba(0,0,120,0.9);">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="confirmModalLabel">Are you sure?</h4>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p id="confirmMsg">This will remove the selected appointment from the appointment history
+						permanently.<br><br>You will need to provide valid credentials to complete this action!</p>
+					<div class="alert alert-danger" id="errorMsg" role="alert" style="display: none">
+						Incorrect Username/Password entered.
+					</div>
+					<div class="alert alert-success" id="succMsg" role="alert" style="display: none">
+						Appointment Deleted Successfully.
+					</div>
+					<form id="confirmForm">
+						<div class="form-group">
+							<label for="username" class="col-form-label">Username:</label>
+							<input type="text" class="form-control" name="uname" id="uJq">
+						</div>
+						<div class="form-group">
+							<label for="message-text" class="col-form-label">Password:</label>
+							<input type="password" class="form-control" name="pass" id="pJq"></input>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline-info shadow" style="font-size: 1.1rem;border-radius: 1.5rem;" id="dissmissModal">Close</button>
+					<button type="button" class="btn btn-outline-danger shadow" style="font-size: 1.1rem;border-radius: 1.5rem;" id="removeModal">Yes!
+						Remove</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script>
+	var clicked_id = 0;
+	var csrftoken = getCookie('csrftoken');
+	var rmAppID = 92;
+	$(".btn-outline-danger").bind("click", function () {
+		if (this.id != "removeModal") {
+			clicked_id = this.id;
+			rmAppID = $("#appID" + this.id).text()
+			//console.log("Clicked ID:" + clicked_id + " Appointment ID: " + rmAppID);
+			$('#confirmModal').modal('show');
+		}
+	});
+	$("#dissmissModal").bind("click", function (e) {
+		e.preventDefault();
+		$('#confirmModal').modal('hide');
+		setTimeout(function () {
+			window.location.href = "/appointments";
+		}, 200);
+	});
+	$("#removeModal").click(function (e) {
+		e.preventDefault();
+		username = $("#uJq").val();
+		password = $("#pJq").val();
+		$.ajax({
+			type: 'POST',
+			url: 'appointments/remove',
+			data: {
+				csrfmiddlewaretoken: csrftoken,
+				rmvAppID: rmAppID,
+				uName: username,
+				passW: password
+			},
+			success: function (data) {
+				if (data == "failure") {
+					$("#confirmModalLabel").text("Oops! Something went wrong");
+					$("#confirmMsg").text(" ");
+					$("#errorMsg").css("display", "none");
+					setTimeout(function () {
+						$("#errorMsg").css("display", "block");
+					}, 200);
+				} else {
+					$("#errorMsg").css("display", "none");
+					$("#removeModal").css("display", "none");
+					$("#confirmForm").css("display", "none");
+					$("#confirmMsg").text(" ");
+					$(".modal-header").css("display", "none");
+					$("#succMsg").css("display", "block");
+				}
+			}
+		});
+	});
+	$('#confirmModal').on('hidden.bs.modal', function () {
+		setTimeout(function () {
+			window.location.href = "/appointments";
+		}, 200);
+	})
+
+	function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie != '') {
+			var cookies = document.cookie.split(';');
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = jQuery.trim(cookies[i]);
+				if (cookie.substring(0, name.length + 1) == (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+</script>
+{% endblock %}

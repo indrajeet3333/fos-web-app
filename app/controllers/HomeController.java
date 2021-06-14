@@ -13,7 +13,10 @@ import scala.Int;
  * to the application's home page.
  */
 public class HomeController extends Controller {
-    static String dbUrl="jdbc:postgresql://ec2-34-193-113-223.compute-1.amazonaws.com:5432/dea9t3pb4r6gal",dbUser="uyiykvbdzgiqvz",dbPass="18689f07325e62dc7990152e01b96c053ed41c266889bf03ac811d4014342e8a";
+    //Local DB Settings
+    // static String dbUrl="jdbc:mysql://localhost:3306/fos",dbUser="root",dbPass="root"
+    //Heroku Prod DB Settings
+    static String dbUrl="jdbc:postgresql://ec2-34-193-113-223.compute-1.amazonaws.com:5432/dea9t3pb4r6gal?sslmode=require",dbUser="uyiykvbdzgiqvz",dbPass="18689f07325e62dc7990152e01b96c053ed41c266889bf03ac811d4014342e8a";
     static Connection conn;
     static PreparedStatement pst;
     static ResultSet resultSet;
